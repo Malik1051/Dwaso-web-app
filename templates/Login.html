@@ -3,29 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; }
-        form { display: inline-block; padding: 20px; border: 1px solid #ddd; background: #f9f9f9; }
-        input { display: block; margin: 10px auto; padding: 8px; width: 200px; }
-        button { padding: 8px 20px; background: blue; color: white; border: none; cursor: pointer; }
-    </style>
+    <title>Login</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h2>Admin Login</h2>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <p style="color: red;">{{ message }}</p>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        {{ form.username.label }} {{ form.username }}
-        {{ form.password.label }} {{ form.password }}
-        <button type="submit" id="loginBtn">{{ form.submit.label }}</button>
-    </form>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <h1>Welcome Back!</h1>
+                <p>Please login to your account</p>
+            </div>
+            <form class="login-form" method="POST">
+                <div class="form-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" name="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="login-button">Login</button>
+            </form>
+            <div class="login-footer">
+                <p>Don't have an account? <a href="#">Sign Up</a></p>
+                <p><a href="#">Forgot Password?</a></p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
