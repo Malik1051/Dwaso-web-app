@@ -24,7 +24,7 @@
         {{ form.hidden_tag() }}
         {{ form.username.label }} {{ form.username }}
         {{ form.password.label }} {{ form.password }}
-        {{ form.submit }}
+        <button type="submit" id="loginBtn">{{ form.submit.label }}</button>
     </form>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
