@@ -67,6 +67,10 @@ def index():
 def login():
     return render_template('login.html')
 
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    return render_template('signup.html')
+
 # Run the application and create the table if it doesn't exist
 if __name__ == '__main__':
     create_admin_table()  # Ensure the admin table exists
