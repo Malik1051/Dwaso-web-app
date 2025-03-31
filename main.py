@@ -1,9 +1,19 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
+from functools import wraps
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
+
+# Login required decorator
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'admin_id' not in session:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 # Function to connect to the SQLite database
 def get_db_connection():
@@ -97,6 +107,7 @@ def signup():
     return render_template('admin_signup.html')
 
 @app.route('/admin/dashboard')
+@login_required
 def admin_dashboard():
     return render_template('admin_dashboard.html') 
 

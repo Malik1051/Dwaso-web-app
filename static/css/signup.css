@@ -1,6 +1,6 @@
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color:  #6a11cb;
+    background-color: #6a11cb; /* Fallback color */
     background-image: url('../img/anna.jpg');
     background-size: cover;
     background-position: center;
@@ -15,70 +15,188 @@ body {
     color: #333;
 }
 
+/* Signup Container */
 .signup-container {
-    background:rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.7);
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
     padding: 40px;
     text-align: center;
-    animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
+    animation: fadeIn 0.5s ease-in-out;
 }
 
-h1 {
-    text-align: center;
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Signup Header */
+.signup-header {
+    margin-bottom: 30px;
+}
+
+.signup-header i {
+    font-size: 2.5rem;
+    color: #6a11cb;
+    margin-bottom: 15px;
+}
+
+.signup-header h1 {
+    margin: 0;
+    font-size: 2rem;
     color: #333;
-    margin-bottom: 1.5rem;
 }
 
+.signup-header p {
+    margin: 10px 0 0;
+    color: #666;
+}
+
+/* Signup Form */
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Form Group */
 .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 5px;
 }
 
-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #555;
+.input-group {
+    display: flex;
+    align-items: center;
+    background: #f1f1f1;
     border-radius: 10px;
+    padding: 12px;
+    transition: all 0.3s ease;
 }
 
-input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-sizing: border-box;
+.input-group:focus-within {
+    background: #fff;
+    box-shadow: 0 0 0 2px #6a11cb;
 }
 
-button {
+.input-group i {
+    margin: 0 10px;
+    color: #666;
+}
+
+.input-group input {
+    border: none;
+    background: transparent;
+    outline: none;
     width: 100%;
-    padding: 0.75rem;
-    background-color:#ff9900 ;
+    font-size: 1rem;
+}
+
+.input-group .toggle-password {
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.input-group .toggle-password:hover {
+    color: #6a11cb;
+}
+
+/* Signup Button */
+.signup-button {
+    background: #ff9900;
     color: white;
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    padding: 15px;
+    border-radius: 10px;
     font-size: 1rem;
-    margin-top: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
 }
 
-button:hover {
-    background-color: blue;
+.signup-button:hover {
+    background: #2575fc;
 }
 
+.signup-button i {
+    font-size: 1.2rem;
+}
+
+/* Login Link */
 .login-link {
-    text-align: center;
-    margin-top: 1rem;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #666;
 }
 
 .login-link a {
-    color: #4CAF50;
+    color: #6a11cb;
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
+.login-link a:hover {
+    color: #2575fc;
+}
+
+/* Error Messages */
 .error {
-    color: red;
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
+    color: #ff4444;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    text-align: left;
+    padding-left: 15px;
+}
+
+/* Dark Mode (Optional) */
+[data-theme="dark"] {
+    --background-color: #1a1a1a;
+    --text-color: #f1f1f1;
+}
+
+[data-theme="dark"] .signup-container {
+    background: rgba(var(--background-color), 0.9);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .signup-header h1,
+[data-theme="dark"] .signup-header p,
+[data-theme="dark"] .login-link {
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .input-group {
+    background: #333;
+}
+
+[data-theme="dark"] .input-group i,
+[data-theme="dark"] .input-group input {
+    color: #f1f1f1;
+}
+
+[data-theme="dark"] .login-link a {
+    color: #6a11cb;
+}
+
+[data-theme="dark"] .login-link a:hover {
+    color: #2575fc;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .signup-container {
+        margin: 20px;
+        padding: 30px 20px;
+    }
+
+    .signup-header h1 {
+        font-size: 1.8rem;
+    }
 }
