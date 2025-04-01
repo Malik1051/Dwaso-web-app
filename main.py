@@ -2,9 +2,19 @@ from flask import Flask, render_template, request, jsonify, session, redirect, u
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
+import os
+from werkzeug.utils import secure_filename
+import time
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
+
+# Configuration for file uploads
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 
 # Login required decorator
 def login_required(f):
@@ -34,6 +44,24 @@ def create_admin_table():
         ''')
         conn.commit()
 
+# Create products table
+def create_products_table():
+    with sqlite3.connect('ecommerce.db') as conn:
+        conn.execute('''
+            CREATE TABLE IF NOT EXISTS products (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                price REAL NOT NULL,
+                description TEXT,
+                image_path TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        conn.commit()
+
+# Helper function to check allowed file extensions
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 #Admin signup
 @app.route('/admin/signup', methods=['POST'])
@@ -117,7 +145,105 @@ def admin_logout():
     session.pop('admin_id', None)
     return redirect(url_for('login'))
 
+# Route to handle product upload
+@app.route('/admin/upload-product', methods=['POST'])
+@login_required
+def upload_product():
+    try:
+        if 'productImage' not in request.files:
+            return jsonify({'success': False, 'message': 'No file uploaded'}), 400
+            
+        file = request.files['productImage']
+        if file.filename == '':
+            return jsonify({'success': False, 'message': 'No file selected'}), 400
+            
+        if file and allowed_file(file.filename):
+            # Create a secure filename and save the file
+            filename = secure_filename(file.filename)
+            # Add timestamp to filename to prevent duplicates
+            filename = f"{int(time.time())}_{filename}"
+            
+            # Ensure upload directory exists
+            os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+            
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(file_path)
+            
+            # Get other form data
+            product_name = request.form.get('productName')
+            product_price = request.form.get('productPrice')
+            product_description = request.form.get('productDescription')
+            
+            # Validate form data
+            if not product_name or not product_price:
+                # Remove uploaded file if form data is invalid
+                os.remove(file_path)
+                return jsonify({'success': False, 'message': 'Product name and price are required'}), 400
+            
+            # Save product details to database
+            with get_db_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                    INSERT INTO products (name, price, description, image_path)
+                    VALUES (?, ?, ?, ?)
+                """, (
+                    product_name,
+                    float(product_price),
+                    product_description,
+                    filename
+                ))
+                conn.commit()
+                
+            return jsonify({
+                'success': True, 
+                'message': 'Product uploaded successfully',
+                'product': {
+                    'name': product_name,
+                    'price': product_price,
+                    'description': product_description,
+                    'image': filename
+                }
+            })
+            
+        return jsonify({'success': False, 'message': 'Invalid file type'}), 400
+        
+    except Exception as e:
+        # Log the error for debugging
+        print(f"Error uploading product: {str(e)}")
+        return jsonify({'success': False, 'message': 'An error occurred while uploading the product'}), 500
+
+# Route to get all products
+@app.route('/admin/products', methods=['GET'])
+@login_required
+def get_products():
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM products ORDER BY created_at DESC")
+            products = cursor.fetchall()
+            
+            # Convert products to list of dictionaries
+            products_list = []
+            for product in products:
+                products_list.append({
+                    'id': product['id'],
+                    'name': product['name'],
+                    'price': product['price'],
+                    'description': product['description'],
+                    'image_path': product['image_path'],
+                    'created_at': product['created_at']
+                })
+                
+            return jsonify({'success': True, 'products': products_list})
+            
+    except Exception as e:
+        print(f"Error fetching products: {str(e)}")
+        return jsonify({'success': False, 'message': 'Error fetching products'}), 500
+
 # Run the application and create the table if it doesn't exist
 if __name__ == '__main__':
-    create_admin_table()  # Ensure the admin table exists
+    create_admin_table()
+    create_products_table()  # Add this line
+    # Create uploads directory if it doesn't exist
+    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
     app.run(host='0.0.0.0', port=5000)  # Use port 5000 for development
