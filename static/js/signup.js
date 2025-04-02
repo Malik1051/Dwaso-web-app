@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     // Reset form
                     document.getElementById('adminSignupForm').reset();
                     // Redirect to login
-                    window.location.href = "/login";
+                    window.location.href = "/ad_login";
                 } else {
                     // Show error message
                     alert(data.message);
