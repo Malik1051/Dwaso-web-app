@@ -152,7 +152,7 @@ def user_login():
         # Connect to the database and fetch the admin credentials
         with get_db_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM admin WHERE username = ? OR email = ?", (username_or_email, username_or_email))
+            cursor.execute("SELECT * FROM user WHERE username = ? OR email = ?", (username_or_email, username_or_email))
             user = cursor.fetchone()
 
         if user and check_password_hash(user['password'], password):
@@ -171,11 +171,12 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+
 #Function to create the product table if it doesn't exist
-def create_product_table():
+def create_products_table():
     with sqlite3.connect('ecommerce.db') as conn:
         conn.execute('''
-            CREATE TABLE IF NOT EXISTS product (
+            CREATE TABLE IF NOT EXISTS products (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
                 price REAL NOT NULL,
@@ -317,19 +318,19 @@ def us_login():
     return render_template('user_login.html')
 
 @app.route('/us_signup', methods=['GET', 'POST'])
-def ad_signup():
+def us_signup():
     return render_template('user_signup.html')
 
 # Logout
 @app.route('/user/logout')
-def admin_logout():
+def user_logout():
     session.pop('user_id', None)
     return redirect(url_for('us_login'))
 
 # Run the application and create tables if they doesn't exist
 if __name__ == '__main__':
     create_admin_table()
-    create_product_table()
+    create_products_table()
     create_user_table()
     # Create uploads directory if it doesn't exist
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)

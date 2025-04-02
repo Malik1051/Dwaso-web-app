@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(data => {
                     alert(data.message); // Show response message
                     if (data.success) {
-                        window.location.href = "/index"; // Redirect to dashboard
+                        window.location.href = "/"; // Redirect to dashboard
                     }
                 })
                 .catch(error => console.error("Error:", error));
