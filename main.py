@@ -9,13 +9,6 @@ import time
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
 
-# Configuration for file uploads
-UPLOAD_FOLDER = 'static/uploads'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
-
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
-
 # Login required decorator
 def login_required(f):
     @wraps(f)
@@ -44,25 +37,6 @@ def create_admin_table():
             )
         ''')
         conn.commit()
-
-# Create products table
-def create_products_table():
-    with sqlite3.connect('ecommerce.db') as conn:
-        conn.execute('''
-            CREATE TABLE IF NOT EXISTS products (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                price REAL NOT NULL,
-                description TEXT,
-                image_path TEXT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        ''')
-        conn.commit()
-
-# Helper function to check allowed file extensions
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 #Admin signup
 @app.route('/admin/signup', methods=['POST'])
@@ -119,6 +93,7 @@ def admin_login():
     except Exception as e:
         return jsonify({"success": False, "message": f"An error occurred: {str(e)}"}), 500
     
+
 #                    USER    
 #Function to create the admin table if it doesn't exist
 def create_user_table():
@@ -190,6 +165,12 @@ def user_login():
         return jsonify({"success": False, "message": f"An error occurred: {str(e)}"}), 500
         
 #  PRODUCTS
+# Configuration for file uploads
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 #Function to create the product table if it doesn't exist
 def create_product_table():
     with sqlite3.connect('ecommerce.db') as conn:
@@ -203,76 +184,12 @@ def create_product_table():
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
-        conn.commit()
+        conn.commit() 
 
-# Get and save products in product table
-@app.route('/admin/dashboard', methods=['GET', 'POST'])
-def product_save():
-    try:
-        data = request.get_json()  # Get JSON data from the request
-        print("Received data:", data)  # show response in console
-        name = data.get('Product Name')
-        price = data.get('Price (KES)')
-        description = data.get('Description')
-        image = data.get('Product Image')
+# Helper function to check allowed file extensions
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-        if not name or not price or not description or not image:
-            return jsonify({"success": False, "message": "All fields are required"}), 400
-
-        with get_db_connection() as conn:
-            cursor = conn.cursor()
-            try:
-                cursor.execute("INSERT INTO product (name, price, description, image) VALUES (?, ?, ?, ?)",
-                               (name, price, description, image))
-                conn.commit()
-                return jsonify({"success": True, "message": "Product uploaded successfully!"}), 201
-            except sqlite3.IntegrityError:
-                return jsonify({"success": False, "message": "Product already exists"}), 409
-    
-    except Exception as e:
-        return jsonify({"success": False, "message": f"An error occurred: {str(e)}"}), 500        
-
-# Landing page
-@app.route('/')
-def index():
-    return render_template('admin_login.html')
-
-# Route for Admin pages
-@app.route('/ad_login', methods=['GET', 'POST'])
-def ad_login():
-    return render_template('admin_login.html')
-
-@app.route('/ad_signup', methods=['GET', 'POST'])
-def ad_signup():
-    return render_template('admin_signup.html')
-
-@app.route('/admin/dashboard', methods=['GET', 'POST'])
-@login_required
-def admin_dashboard():
-    return render_template('admin_dashboard.html') 
-
-# Logout
-@app.route('/admin/logout')
-def admin_logout():
-    session.pop('admin_id', None)
-    return redirect(url_for('ad_login'))
-
-<<<<<<< HEAD
-# Route for User pages
-@app.route('/us_login', methods=['GET', 'POST'])
-def us_login():
-    return render_template('user_login.html')
-
-@app.route('/us_signup', methods=['GET', 'POST'])
-def us_signup():
-    return render_template('user_signup.html')
-
-# Run the application and create tables if they doesn't exist
-if __name__ == '__main__':
-    create_admin_table()  # Ensure the admin table exists
-    create_user_table()  # Ensure the user table exists
-    create_product_table()  # Ensure the user table exists
-=======
 # Route to handle product upload
 @app.route('/admin/upload-product', methods=['POST'])
 @login_required
@@ -366,13 +283,54 @@ def get_products():
             
     except Exception as e:
         print(f"Error fetching products: {str(e)}")
-        return jsonify({'success': False, 'message': 'Error fetching products'}), 500
+        return jsonify({'success': False, 'message': 'Error fetching products'}), 500          
 
-# Run the application and create the table if it doesn't exist
+
+# Landing page
+@app.route('/')
+def index():
+    return render_template('admin_login.html')
+
+# Route for Admin pages
+@app.route('/ad_login', methods=['GET', 'POST'])
+def ad_login():
+    return render_template('admin_login.html')
+
+@app.route('/ad_signup', methods=['GET', 'POST'])
+def ad_signup():
+    return render_template('admin_signup.html')
+
+@app.route('/admin/dashboard', methods=['GET', 'POST'])
+@login_required
+def admin_dashboard():
+    return render_template('admin_dashboard.html') 
+
+# Logout
+@app.route('/admin/logout')
+def admin_logout():
+    session.pop('admin_id', None)
+    return redirect(url_for('ad_login'))
+
+#Route for user pages
+@app.route('/us_login', methods=['GET', 'POST'])
+def us_login():
+    return render_template('user_login.html')
+
+@app.route('/us_signup', methods=['GET', 'POST'])
+def ad_signup():
+    return render_template('user_signup.html')
+
+# Logout
+@app.route('/user/logout')
+def admin_logout():
+    session.pop('user_id', None)
+    return redirect(url_for('us_login'))
+
+# Run the application and create tables if they doesn't exist
 if __name__ == '__main__':
     create_admin_table()
-    create_products_table()  # Add this line
+    create_product_table()
+    create_user_table()
     # Create uploads directory if it doesn't exist
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
->>>>>>> 1f07eed4e99a6c35acb6555bac224c59b24f6834
     app.run(host='0.0.0.0', port=5000)  # Use port 5000 for development
