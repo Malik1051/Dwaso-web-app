@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dwaso - Products</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">Dwaso</div>
+        <nav>
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('products') }}">Products</a>
+            <a href="{{ url_for('view_cart') }}">Cart</a>
+            <a href="{{ url_for('us_login') }}">Login</a>
+        </nav>
+    </header>
+    <section class="products">
+        <h1>Our Products</h1>
+        <div class="product">
+            <img src="product1.jpg" alt="Product 1">
+            <h2>Product 1</h2>
+            <p>$99.99</p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="product2.jpg" alt="Product 2">
+            <h2>Product 2</h2>
+            <p>$79.99</p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        <div class="product-grid">
+            <!-- Products will be dynamically added here -->
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2023 Dwaso. All rights reserved.</p>
+    </footer>
+</body>
+</html>

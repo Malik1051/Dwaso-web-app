@@ -164,7 +164,7 @@ def user_login():
     except Exception as e:
         return jsonify({"success": False, "message": f"An error occurred: {str(e)}"}), 500
         
-#  PRODUCTS
+#                              PRODUCTS
 # Configuration for file uploads
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
@@ -286,11 +286,62 @@ def get_products():
         print(f"Error fetching products: {str(e)}")
         return jsonify({'success': False, 'message': 'Error fetching products'}), 500          
 
+#       CART
+# Add a product to the cart
+@app.route('/add_to_cart', methods=['POST'])
+def add_to_cart():
+    product_id = request.form.get('product_id')
+    quantity = int(request.form.get('quantity', 1))
+
+    if 'cart' not in session:
+        session['cart'] = {}
+
+    cart = session['cart']
+
+    if product_id in cart:
+        cart[product_id] += quantity
+    else:
+        cart[product_id] = quantity
+
+    session['cart'] = cart
+    return redirect(url_for('view_cart'))
+
+#View Cart
+@app.route('/cart')
+def view_cart():
+    cart = session.get('cart', {})
+    return render_template('cart.html', cart=cart)
+
+#Remove products from cart
+@app.route('/remove_from_cart/<product_id>')
+def remove_from_cart(product_id):
+    cart = session.get('cart', {})
+    if product_id in cart:
+        del cart[product_id]
+        session['cart'] = cart
+    return redirect(url_for('view_cart'))
+
+# Clear Cart
+@app.route('/clear_cart')
+def clear_cart():
+    session.pop('cart', None)
+    return redirect(url_for('view_cart'))
+
 
 # Landing page
 @app.route('/')
 def index():
     return render_template('index_landing.html')
+
+# Services page
+@app.route('/services', methods=['GET', 'POST'])
+def services():
+    return render_template('services.html')
+
+# Products page
+@app.route('/products')
+def products():
+    return render_template('products.html')
 
 # Route for Admin pages
 @app.route('/ad_login', methods=['GET', 'POST'])
