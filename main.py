@@ -290,7 +290,7 @@ def get_products():
 # Landing page
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index_landing.html')
 
 # Route for Admin pages
 @app.route('/ad_login', methods=['GET', 'POST'])

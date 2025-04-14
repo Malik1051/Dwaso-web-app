@@ -1,0 +1,139 @@
+/* Navigation */
+navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #232f3e;
+    color: white;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff9900;
+  }
+  
+  .navbar nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 18px;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  
+  .navbar nav a:hover {
+    color: #ff9900;
+  }  
+.nav {
+    background-color: #00A8E1 ;
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    color: #232f3e;
+    font-weight: bold;
+    font-size: 2rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    margin-left: 10px;  
+}
+
+.navbar-brand:hover {
+    color: #ff9900;
+}
+
+.nav-link {
+    color: #232f3e;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}       
+
+.nav-link:hover {
+    color: #ff9900;
+}
+
+.nav-link:active {
+    color: #ff9900;
+}
+
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(#ff9900, rgba(0, 169, 225, 0.322)), url('/static/img/top-view-desk-with-black-friday-gifts.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+/* Feature Icons */
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #0d6efd;
+}
+
+/* Feature Images */
+.feature-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+    margin: 15px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.feature-image:hover {
+    transform: scale(1.05);
+}
+
+/* Call to Action Section */
+.cta-section {
+    background-color: #f8f9fa;
+    padding: 5rem 0;
+}
+
+/* Navigation Customization */
+.navbar-nav .btn {
+    margin-left: 10px;
+}
+
+/* Footer Customization */
+.footer-divider {
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 20px 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        height: auto;
+        padding: 100px 0;
+    }
+    
+    .navbar-nav .btn {
+        margin: 10px 0;
+    }
+}
+
+/* Feature Images */
+.feature-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+    margin: 15px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.feature-image:hover {
+    transform: scale(1.05);
+}
