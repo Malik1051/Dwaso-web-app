@@ -3,62 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dwaso_Admin_Dashboard</title>
+    <title>Dwaso Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
-    
+    <!-- Custom CSS -->
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background: #343a40;
+            color: white;
+        }
+        .nav-link {
+            color: rgba(255,255,255,.8);
+        }
+        .nav-link:hover {
+            color: white;
+        }
+        .nav-link.active {
+            background: rgba(255,255,255,.1);
+        }
+        .content {
+            padding: 20px;
+        }
+        .upload-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .item-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+            overflow: hidden;
+        }
+        .item-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .item-card .card-body {
+            padding: 15px;
+        }
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <div class="header">
-            <h1>Welcome to Admin Dashboard</h1>
-            <a href="{{ url_for('admin_logout') }}" class="logout-btn">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
-        </div>
-        
-        <div class="content">
-            <h2><i class="fas fa-box"></i> Product Management</h2>
-            
-            <!-- Upload Form -->
-            <div class="product-form">
-                <h3><i class="fas fa-plus-circle"></i> Add New Product</h3>
-                <form id="productForm" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="productName">Product Name</label>
-                        <input type="text" id="productName" name="productName" placeholder="Enter product name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="productPrice">Price (KES)</label>
-                        <input type="number" id="productPrice" name="productPrice" min="0" step="0.01" placeholder="Enter price" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="productDescription">Description</label>
-                        <textarea id="productDescription" name="productDescription" rows="3" placeholder="Enter product description" required></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="productImage">Product Image</label>
-                        <input type="file" id="productImage" name="productImage" accept="image/*" required>
-                        <div id="imagePreview" class="image-preview"></div>
-                    </div>
-                    
-                    <button type="submit" class="upload-btn">
-                        <i class="fas fa-upload"></i>
-                        Upload Product
-                    </button>
-                </form>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar p-3">
+                <h4 class="text-center mb-4">Admin Panel</h4>
+                <div class="nav flex-column">
+                    <a class="nav-link active" href="#products" data-bs-toggle="tab">
+                        <i class="fas fa-box me-2"></i> Products
+                    </a>
+                    <a class="nav-link" href="#services" data-bs-toggle="tab">
+                        <i class="fas fa-cogs me-2"></i> Services
+                    </a>
+                    <a class="nav-link" href="{{ url_for('admin_logout') }}">
+                        <i class="fas fa-sign-out-alt me-2"></i> Logout
+                    </a>
+                </div>
             </div>
 
-            <!-- Product Display -->
-            <div class="product-grid">
-                <!-- Products will be dynamically added here -->
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 content">
+                <div class="tab-content">
+                    <!-- Products Tab -->
+                    <div class="tab-pane fade show active" id="products">
+                        <h2 class="mb-4">Product Management</h2>
+                        
+                        <!-- Product Upload Form -->
+                        <div class="upload-form mb-4">
+                            <h4><i class="fas fa-plus-circle"></i> Add New Product</h4>
+                            <form id="productForm" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label for="productName" class="form-label">Product Name</label>
+                                    <input type="text" class="form-control" id="productName" name="productName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="productPrice" class="form-label">Price (KES)</label>
+                                    <input type="number" class="form-control" id="productPrice" name="productPrice" min="0" step="0.01" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="productDescription" class="form-label">Description</label>
+                                    <textarea class="form-control" id="productDescription" name="productDescription" rows="3" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="productImage" class="form-label">Product Image</label>
+                                    <input type="file" class="form-control" id="productImage" name="productImage" accept="image/*" required>
+                                    <div id="imagePreview" class="mt-2"></div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-upload me-2"></i>Upload Product
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Products Grid -->
+                        <div id="productsGrid" class="items-grid"></div>
+                    </div>
+
+                    <!-- Services Tab -->
+                    <div class="tab-pane fade" id="services">
+                        <h2 class="mb-4">Service Management</h2>
+                        
+                        <!-- Service Upload Form -->
+                        <div class="upload-form mb-4">
+                            <h4><i class="fas fa-plus-circle"></i> Add New Service</h4>
+                            <form id="serviceForm" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label for="serviceName" class="form-label">Service Name</label>
+                                    <input type="text" class="form-control" id="serviceName" name="serviceName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="servicePrice" class="form-label">Price (KES)</label>
+                                    <input type="number" class="form-control" id="servicePrice" name="servicePrice" min="0" step="0.01" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="serviceDuration" class="form-label">Duration (hours)</label>
+                                    <input type="number" class="form-control" id="serviceDuration" name="serviceDuration" min="0.5" step="0.5" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="serviceDescription" class="form-label">Description</label>
+                                    <textarea class="form-control" id="serviceDescription" name="serviceDescription" rows="3" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="serviceImage" class="form-label">Service Image</label>
+                                    <input type="file" class="form-control" id="serviceImage" name="serviceImage" accept="image/*" required>
+                                    <div id="serviceImagePreview" class="mt-2"></div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-upload me-2"></i>Upload Service
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Services Grid -->
+                        <div id="servicesGrid" class="items-grid"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='js/admin_dashboard.js') }}"></script>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script>
+        // Image preview functionality
+        function previewImage(input, previewId) {
+            const preview = document.getElementById(previewId);
+            preview.innerHTML = '';
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('preview-image');
+                    preview.appendChild(img);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Set up image preview listeners
+        document.getElementById('productImage').addEventListener('change', function() {
+            previewImage(this, 'imagePreview');
+        });
+
+        document.getElementById('serviceImage').addEventListener('change', function() {
+            previewImage(this, 'serviceImagePreview');
+        });
+
+        // Product form submission
+        document.getElementById('productForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            
+            try {
+                const response = await fetch('/admin/upload-product', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    alert('Product uploaded successfully!');
+                    this.reset();
+                    document.getElementById('imagePreview').innerHTML = '';
+                    loadProducts();
+                } else {
+                    alert(result.message || 'Error uploading product');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error uploading product');
+            }
+        });
+
+        // Service form submission
+        document.getElementById('serviceForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            
+            try {
+                const response = await fetch('/admin/upload-service', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    alert('Service uploaded successfully!');
+                    this.reset();
+                    document.getElementById('serviceImagePreview').innerHTML = '';
+                    loadServices();
+                } else {
+                    alert(result.message || 'Error uploading service');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error uploading service');
+            }
+        });
+
+        // Load products function
+        async function loadProducts() {
+            try {
+                const response = await fetch('/admin/products');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const grid = document.getElementById('productsGrid');
+                    grid.innerHTML = data.products.map(product => `
+                        <div class="item-card">
+                            <img src="/static/uploads/${product.image_path}" alt="${product.name}">
+                            <div class="card-body">
+                                <h5>${product.name}</h5>
+                                <p>KES ${product.price}</p>
+                                <p>${product.description}</p>
+                                <small class="text-muted">Added: ${product.created_at}</small>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Error loading products:', error);
+            }
+        }
+
+        // Load services function
+        async function loadServices() {
+            try {
+                const response = await fetch('/admin/services');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const grid = document.getElementById('servicesGrid');
+                    grid.innerHTML = data.services.map(service => `
+                        <div class="item-card">
+                            <img src="/static/uploads/${service.image_path}" alt="${service.name}">
+                            <div class="card-body">
+                                <h5>${service.name}</h5>
+                                <p>KES ${service.price}</p>
+                                <p>Duration: ${service.duration} hours</p>
+                                <p>${service.description}</p>
+                                <small class="text-muted">Added: ${service.created_at}</small>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Error loading services:', error);
+            }
+        }
+
+        // Load initial data
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            loadServices();
+        });
+    </script>
 </body>
-</html>
+</html> 

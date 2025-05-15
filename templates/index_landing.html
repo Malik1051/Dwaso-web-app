@@ -29,16 +29,21 @@
                         <a class="nav-link" href="{{ url_for('about') }}">About</a>
                     </li>
                     <li class="nav-item fade-in delay-2">
-                        <a class="nav-link" href="#products">products</a>
+                        <a class="nav-link" href="{{ url_for('products') }}">Products</a>
                     </li>
                     <li class="nav-item fade-in delay-2">
-                        <a class="nav-link" href="#services">services</a>
+                        <a class="nav-link" href="#services">Services</a>
                     </li>
                     <li class="nav-item fade-in delay-3">
                         <a class="nav-link" href="{{ url_for('us_login') }}">Login</a>
                     </li>
                     <li class="nav-item fade-in delay-3">
                         <a class="nav-link btn btn-primary text-white hover-scale" href="{{ url_for('us_signup') }}">Sign Up</a>
+                    </li>
+                    <li class="nav-item fade-in delay-3 ms-2">
+                        <a class="nav-link btn btn-dark text-white hover-scale" href="{{ url_for('ad_login') }}">
+                            <i class="fas fa-user-shield"></i> Admin
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -95,7 +100,7 @@
     <section class="cta-section scroll-animate from-bottom">
         <div class="container text-center">
             <div class="cta-content">
-                <h2 class="mb-4 scale-up">Ready for Your E-commerce Journey? 🚀</h2>
+                <h2 class="mb-4 scale-up">Ready for Your E-commerce Journey? </h2>
                 <div class="stats-container fade-in delay-1">
                     <div class="stat-item slide-right">
                         <i class="fas fa-users"></i>
