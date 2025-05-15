@@ -8,44 +8,57 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
 </head>
 <body>
     <div class="login-container">
-        <div class="login-box">
-            <div class="login-header">
-                <h1>Welcome Back!</h1>
-                <p>Your next great deal is just a login away!</p>
+        <div class="login-box scale-up">
+            <div class="login-header slide-down">
+                <div class="logo-container pulse">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <h1 class="fade-in delay-1">Welcome Back!</h1>
+                <p class="fade-in delay-2">Your next great deal is just a login away!</p>
             </div>
-            <form id="userLoginForm" class="login-form" method="POST">
+            <form id="userLoginForm" class="login-form fade-in delay-3" method="POST">
                 <div class="form-group">
-                    <div class="input-group">
-                        <i class="fas fa-user"></i>
+                    <div class="input-group slide-right">
+                        <i class="fas fa-user bounce"></i>
                         <input type="text" id="username" name="username" placeholder="Username" required>
                     </div>
                 </div>
                 <div id="usernameError" class="error"></div>
                 
                 <div class="form-group">
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
+                    <div class="input-group slide-left">
+                        <i class="fas fa-lock bounce"></i>
                         <input type="password" id="password" name="password" placeholder="Password" required>
-                        <i class="fas fa-eye-slash toggle-password"></i>
+                        <i class="fas fa-eye-slash toggle-password hover-rotate"></i>
                     </div>
                 </div>
                 <div id="passwordError" class="error"></div>
                 
-                <button type="submit" class="login-button">
+                <button type="submit" class="login-button hover-scale">
                     <i class="fas fa-sign-in-alt"></i>
-                    Login
+                    <span>Login</span>
                 </button>
             </form>
-            <div class="login-footer">
-                <p>Don't have an account? <a href="{{ url_for('us_signup') }}">Sign Up</a></p>
-                <p><a href="#">Forgot Password?</a></p>
+            <div class="login-footer fade-in delay-4">
+                <p class="slide-up">Don't have an account? <a href="{{ url_for('us_signup') }}" class="hover-underline">Sign Up</a></p>
+                <p class="slide-up delay-5"><a href="#" class="hover-underline">Forgot Password?</a></p>
+            </div>
+            <div class="social-login fade-in delay-6">
+                <p>Or login with</p>
+                <div class="social-icons">
+                    <a href="#" class="hover-scale"><i class="fab fa-google"></i></a>
+                    <a href="#" class="hover-scale"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="hover-scale"><i class="fab fa-twitter"></i></a>
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="../static/js/user_login.js"></script>
+    <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/user_login.js') }}"></script>
 </body>
 </html>

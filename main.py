@@ -191,6 +191,11 @@ def create_products_table():
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
 # Route to handle product upload
 @app.route('/admin/upload-product', methods=['POST'])
 @login_required

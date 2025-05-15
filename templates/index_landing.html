@@ -6,36 +6,39 @@
     <title>Welcome to Dwaso</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Custom CSS -->
-    <link   rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Dwaso</a>
+            <a class="navbar-brand fade-in" href="{{ url_for('index') }}">Dwaso</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
+                    <li class="nav-item fade-in delay-1">
                         <a class="nav-link" href="#features">Features</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
+                    <li class="nav-item fade-in delay-1">
+                        <a class="nav-link" href="{{ url_for('about') }}">About</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item fade-in delay-2">
                         <a class="nav-link" href="#products">products</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item fade-in delay-2">
                         <a class="nav-link" href="#services">services</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item fade-in delay-3">
                         <a class="nav-link" href="{{ url_for('us_login') }}">Login</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-primary text-white" href="{{ url_for('us_signup') }}">Sign Up</a>
+                    <li class="nav-item fade-in delay-3">
+                        <a class="nav-link btn btn-primary text-white hover-scale" href="{{ url_for('us_signup') }}">Sign Up</a>
                     </li>
                 </ul>
             </div>
@@ -47,9 +50,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-                    <h1 class="display-4 fw-bold mb-4">Welcome to Dwaso</h1>
-                    <p class="lead mb-4">Your one-stop e-commerce solution. Harness the power of modern technology with our innovative platform—designed to scale, optimize, and elevate your online shopping Experience</p>
-                    <a href="{{ url_for('us_signup') }}" class="btn btn-primary btn-lg">Get Started</a>
+                    <h1 class="display-4 fw-bold mb-4 slide-left">Welcome to Dwaso</h1>
+                    <p class="lead mb-4 slide-right delay-1">Your one-stop e-commerce solution. Harness the power of modern technology with our innovative platform—designed to scale, optimize, and elevate your online shopping Experience</p>
+                    <a href="{{ url_for('us_signup') }}" class="btn btn-primary btn-lg fade-in delay-2 hover-scale">Get Started</a>
                 </div>
             </div>
         </div>
@@ -58,42 +61,96 @@
     <!-- Features Section -->
     <section id="features" class="py-5">
         <div class="container">
-            <h2 class="text-center mb-5">Things We Sell</h2>
+            <h2 class="text-center mb-5 scale-up">Things We Sell</h2>
             <div class="row">
                 <div class="col-md-4 text-center mb-4">
-                    <div class="feature-icon"></div>
-                    <img src="{{ url_for('static', filename='img/shoes.jpg') }}" alt="Professional Man" class="feature-image mb-3">
-                    <h3>Shoes</h3>
-                    <p>Lightning-fast performance and reliable service you can count on.</p>
+                    <div class="feature-icon scroll-animate from-left"></div>
+                    <div class="product-card scroll-animate from-left delay-1">
+                        <img src="{{ url_for('static', filename='img/shoes.jpg') }}" alt="Professional Man" class="feature-image mb-3 hover-lift hover-rotate">
+                        <h3 class="fade-in delay-2">Shoes</h3>
+                        <p class="fade-in delay-3">Lightning-fast performance and reliable service you can count on.</p>
+                    </div>
                 </div>
                 <div class="col-md-4 text-center mb-4">
-                    <div class="feature-icon"></div>
-                    <div class="product">
-                        <img src="{{ url_for('static', filename='img/front-view-man-posing-studio.jpg') }}" alt="Professional Man" class="feature-image mb-3">
-                        
+                    <div class="feature-icon scroll-animate from-bottom"></div>
+                    <div class="product-card scroll-animate from-bottom delay-1">
+                        <img src="{{ url_for('static', filename='img/front-view-man-posing-studio.jpg') }}" alt="Professional Man" class="feature-image mb-3 hover-lift pulse">
+                        <h3 class="fade-in delay-2">Clothes</h3>
+                        <p class="fade-in delay-3">Your data is protected with industry-leading security measures.</p>
                     </div>
-                    <h3>Clothes</h3>
-                    <p>Your data is protected with industry-leading security measures.</p>
                 </div>
                 <div class="col-md-4 text-center mb-4">
-                    <div class="feature-icon"></div>
-                    <div class="product">
-                        <img src="{{ url_for('static', filename='img/services.jpg') }}" alt="Professional Man" class="feature-image mb-3">
-                        
+                    <div class="feature-icon scroll-animate from-right"></div>
+                    <div class="product-card scroll-animate from-right delay-1">
+                        <img src="{{ url_for('static', filename='img/services.jpg') }}" alt="Professional Man" class="feature-image mb-3 hover-lift float">
+                        <h3 class="fade-in delay-2">Services</h3>
+                        <p class="fade-in delay-3">Stay ahead with our cutting-edge technology solutions.</p>
                     </div>
-                    <h3>Services</h3>
-                    <p>Stay ahead with our cutting-edge technology solutions.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Call to Action Section -->
-    <section class="cta-section">
+    <section class="cta-section scroll-animate from-bottom">
         <div class="container text-center">
-            <h2 class="mb-4">Ready to Get Started?</h2>
-            <p class="lead mb-4">Join thousands of satisfied users who trust our platform.</p>
-            <a href="{{ url_for('us_signup') }}" class="btn btn-primary btn-lg">Sign Up Now</a>
+            <div class="cta-content">
+                <h2 class="mb-4 scale-up">Ready for Your E-commerce Journey? 🚀</h2>
+                <div class="stats-container fade-in delay-1">
+                    <div class="stat-item slide-right">
+                        <i class="fas fa-users"></i>
+                        <h3 class="counter">50,000+</h3>
+                        <p>Active Users</p>
+                    </div>
+                    <div class="stat-item slide-up">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3 class="counter">100,000+</h3>
+                        <p>Products Sold</p>
+                    </div>
+                    <div class="stat-item slide-left">
+                        <i class="fas fa-star"></i>
+                        <h3 class="counter">4.8</h3>
+                        <p>Average Rating</p>
+                    </div>
+                </div>
+                <div class="testimonial-slider fade-in delay-2">
+                    <div class="testimonial">
+                        <div class="quote-icon">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <p class="testimonial-text">"Dwaso transformed my small business into a thriving online store. The platform is incredibly easy to use!"</p>
+                        <div class="testimonial-author">
+                            <img src="{{ url_for('static', filename='img/testimonial1.jpg') }}" alt="Sarah K." class="author-img">
+                            <div class="author-info">
+                                <h4>Sarah K.</h4>
+                                <p>Fashion Boutique Owner</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cta-features fade-in delay-3">
+                    <div class="feature-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Secure Payments</span>
+                    </div>
+                    <div class="feature-badge">
+                        <i class="fas fa-truck"></i>
+                        <span>Fast Delivery</span>
+                    </div>
+                    <div class="feature-badge">
+                        <i class="fas fa-headset"></i>
+                        <span>24/7 Support</span>
+                    </div>
+                </div>
+                <a href="{{ url_for('us_signup') }}" class="btn btn-primary btn-lg hover-scale pulse delay-4">
+                    Start Selling Today
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <p class="guarantee-text fade-in delay-5">
+                    <i class="fas fa-check-circle"></i>
+                    30-day money-back guarantee • No credit card required
+                </p>
+            </div>
         </div>
     </section>
 
@@ -101,17 +158,17 @@
     <footer class="bg-dark text-light py-4">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 fade-in">
                     <h5>About Dwaso</h5>
                     <p>Empowering users by simplifying purchasing and selling products.</p>
                 </div>
-                <div class="col-md-6 text-md-end">
+                <div class="col-md-6 text-md-end fade-in delay-1">
                     <h5>Contact Us</h5>
                     <p>Email: contact@dwaso.com</p>
                 </div>
             </div>
             <hr class="footer-divider">
-            <div class="text-center">
+            <div class="text-center fade-in delay-2">
                 <p>&copy; 2024 Dwaso. All rights reserved.</p>
             </div>
         </div>
@@ -119,5 +176,7 @@
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
 </body>
 </html>

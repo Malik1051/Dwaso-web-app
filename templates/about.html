@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Dwaso</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand fade-in" href="{{ url_for('index') }}">Dwaso</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item fade-in delay-1">
+                        <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                    </li>
+                    <li class="nav-item fade-in delay-1">
+                        <a class="nav-link active" href="#">About</a>
+                    </li>
+                    <li class="nav-item fade-in delay-2">
+                        <a class="nav-link" href="#products">products</a>
+                    </li>
+                    <li class="nav-item fade-in delay-2">
+                        <a class="nav-link" href="#services">services</a>
+                    </li>
+                    <li class="nav-item fade-in delay-3">
+                        <a class="nav-link" href="{{ url_for('us_login') }}">Login</a>
+                    </li>
+                    <li class="nav-item fade-in delay-3">
+                        <a class="nav-link btn btn-primary text-white hover-scale" href="{{ url_for('us_signup') }}">Sign Up</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4 slide-left">About Dwaso</h1>
+                    <p class="lead slide-right delay-1">Empowering entrepreneurs and shoppers through innovative e-commerce solutions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="mission-card hover-lift scroll-animate from-left">
+                        <h2 class="section-title">Our Mission</h2>
+                        <p class="lead">Dwaso is on a mission to empower entrepreneurs and shoppers through a seamless online experience. We connect buyers and sellers of products and services in a user-friendly, secure, and flexible platform tailored for local growth and global reach.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mission-card hover-lift scroll-animate from-right">
+                        <h2 class="section-title">What Makes Us Different</h2>
+                        <p class="lead">Unlike other marketplaces, Dwaso supports both tangible goods and intangible services — from clothing and electronics to freelance gigs and tutoring. We believe in simplicity, trust, and empowerment for all users.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-5 scale-up">Meet Our Team</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="team-card hover-lift scroll-animate from-bottom slide-up">
+                        <div class="img-wrapper fade-in delay-1">
+                            <img src="{{ url_for('static', filename='images/founder.jpg') }}" alt="Founder" class="pulse">
+                        </div>
+                        <h4 class="slide-right delay-2">Kwame Owusu</h4>
+                        <p class="fade-in delay-3">Founder & CEO</p>
+                        <div class="social-links fade-in delay-4">
+                            <a href="#" class="hover-scale"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="hover-scale"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="team-card hover-lift scroll-animate from-bottom slide-up">
+                        <div class="img-wrapper fade-in delay-2">
+                            <img src="{{ url_for('static', filename='images/tech_lead.jpg') }}" alt="Tech Lead" class="pulse">
+                        </div>
+                        <h4 class="slide-right delay-3">Akosua Boateng</h4>
+                        <p class="fade-in delay-4">Tech Lead</p>
+                        <div class="social-links fade-in delay-5">
+                            <a href="#" class="hover-scale"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="hover-scale"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="team-card hover-lift scroll-animate from-bottom slide-up">
+                        <div class="img-wrapper fade-in delay-3">
+                            <img src="{{ url_for('static', filename='images/designer.jpg') }}" alt="UI/UX Designer" class="pulse">
+                        </div>
+                        <h4 class="slide-right delay-4">Yaw Mensah</h4>
+                        <p class="fade-in delay-5">UI/UX Designer</p>
+                        <div class="social-links fade-in delay-6">
+                            <a href="#" class="hover-scale"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="hover-scale"><i class="fab fa-dribbble"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 fade-in">
+                    <h5>About Dwaso</h5>
+                    <p>Empowering users by simplifying purchasing and selling products.</p>
+                </div>
+                <div class="col-md-6 text-md-end fade-in delay-1">
+                    <h5>Contact Us</h5>
+                    <p>Email: contact@dwaso.com</p>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="text-center fade-in delay-2">
+                <p>&copy; 2024 Dwaso. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+</body>
+</html>
